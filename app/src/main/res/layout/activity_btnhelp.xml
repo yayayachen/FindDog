@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight=".1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="請選擇品種："
+                    android:textColor="#000000" />
+
+                <Spinner
+                    android:id='@+id/spinBreed'
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:entries="@array/arrayDog"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:singleLine="true"></Spinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="狗狗名字："
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/txtDogName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:hint="請輸入狗狗名字" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="毛色或明顯特徵："
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/txtDogFT"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:hint="請輸入狗狗明顯特徵或毛色"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="走失日期："
+                    android:textColor="#000000" />
+
+                <Button
+                    android:id="@+id/btnLostDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:background="#00000000"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="選擇日期">
+
+                </Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="走失地點："
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/txtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:hint="請輸入狗狗走失地點"
+                    />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight="0.9"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="狗狗性別："
+                    android:textColor="#000000" />
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_weight=".5"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/sexM"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_weight=".5"
+                        android:checked="true"
+                        android:text="公" />
+
+                    <RadioButton
+                        android:id="@+id/sexF"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_weight=".5"
+                        android:text="母" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="主人姓名："
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/txtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:hint="請輸入主人姓名"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="主人電話："
+                    android:textColor="#000000"
+
+                    />
+
+                <EditText
+                    android:id="@+id/txtUserPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".5"
+                    android:inputType="phone"
+                    android:hint="請輸入連絡電話"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="是否提供賞金："
+                    android:textColor="#000000"
+
+                    />
+
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_weight=".9"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rewardFalse"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_weight=".5"
+                        android:checked="true"
+                        android:text="否" />
+
+                    <RadioButton
+                        android:id="@+id/rewardTrue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:layout_weight=".5"
+                        android:text="是" />
+
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/txtReward"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".8"
+                    android:editable="true"
+                    android:inputType="phone" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_weight=".7"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="送出" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

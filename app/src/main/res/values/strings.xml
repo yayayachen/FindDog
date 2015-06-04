@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">狗狗在哪裡</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_btn_help">btnHelpActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string-array name="arrayDog">
+        <item>米克斯</item>
+        <item>瑪爾濟斯</item>
+        <item>貴賓犬</item>
+        <item>雪納瑞</item>
+        <item>博美犬</item>
+        <item>臘腸犬</item>
+        <item>黃金獵犬</item>
+        <item>拉布拉多</item>
+        <item>邊境牧羊犬</item>
+        <item>西高地白㹴</item>
+        <item>西施犬</item>
+        <item>蝴蝶犬</item>
+        <item>米格魯</item>
+        <item>約克夏</item>
+        <item>柴犬</item>
+        <item>狐狸犬</item>
+        <item>秋田</item>
+        <item>哈士奇</item>
+        <item>鬆獅犬</item>
+        <item>柯基犬</item>
+        <item>巴哥犬</item>
+        <item>吉娃娃</item>
+        <item>法國鬥牛犬</item>
+        <item>英國鬥牛犬</item>
+    </string-array>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="title_activity_all_data">AllDataActivity</string>
+</resources>
