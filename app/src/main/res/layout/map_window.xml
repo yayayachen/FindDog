@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".9"
+        >
+        <ImageView
+            android:id="@+id/wimgDog"
+            android:layout_width="150sp"
+            android:layout_height="150sp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_marginLeft="5sp"
+            android:layout_weight=".1"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".8">
+
+            <TextView
+                android:id="@+id/wAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="走失地點" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight=".4"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗品種：" />
+
+            <TextView
+                android:id="@+id/wDogBreed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗品種" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗名字：" />
+
+            <TextView
+                android:id="@+id/wDogName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗名字" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗特徵：" />
+
+            <TextView
+                android:id="@+id/wDogFT"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="狗狗特徵" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="走失日期：" />
+
+            <TextView
+                android:id="@+id/wLostDate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="走失日期" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="主人姓名：" />
+
+            <TextView
+                android:id="@+id/wUserName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="主人姓名" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="主人電話：" />
+
+            <TextView
+                android:id="@+id/wUserPhone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="主人電話" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight=".2">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".3"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="賞金(NT$)：" />
+
+            <TextView
+                android:id="@+id/wReward"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_weight=".2"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="賞金金額" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

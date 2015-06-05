@@ -5,6 +5,9 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -12,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -21,13 +25,18 @@ public class MapsActivity extends FragmentActivity {
 
     private Context context;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private String address;
+    private String address, dn, dft, dbr, un, up, ld, rw;
     private static final String TAG_PID = "ID";
+
     private static final String TAG_NAME = "DogName";
     private static final String TAG_DOGBREED = "DogBreed";
     private static final String TAG_USERNAME = "UserName";
     private static final String TAG_USERPHONE = "UserPhone";
     private static final String TAG_ADDRESS = "Address";
+    private static final String TAG_DOGFT = "DogFT";
+    private static final String TAG_REWARD = "Reward";
+    private static final String TAG_LOSTDATE = "LostDate";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +47,64 @@ public class MapsActivity extends FragmentActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String msg = bundle.getString(TAG_ADDRESS);
+            dn = bundle.getString(TAG_NAME);
+            dft = bundle.getString(TAG_DOGFT);
+            dbr = bundle.getString(TAG_DOGBREED);
+            un = bundle.getString(TAG_USERNAME);
+            up = bundle.getString(TAG_USERPHONE);
+            ld = bundle.getString(TAG_LOSTDATE);
+            rw = bundle.getString(TAG_REWARD);
+
+            if ("".equals(rw)) {
+                rw = "無提供賞金";
+            }
             if (msg != null) {
                 address = msg;
                 locationNameToMarker(address);
             }
+        }
+
+        mMap.setInfoWindowAdapter(new mapInfoWindow());
+    }
+
+    class mapInfoWindow implements GoogleMap.InfoWindowAdapter {
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            View infoWindow = getLayoutInflater().inflate(R.layout.map_window, null);
+
+            ImageView dogImg = (ImageView) infoWindow.findViewById(R.id.wimgDog);
+            TextView dogName = (TextView) infoWindow.findViewById(R.id.wDogName);
+            TextView dogFT = (TextView) infoWindow.findViewById(R.id.wDogFT);
+            TextView dogBreed = (TextView) infoWindow.findViewById(R.id.wDogBreed);
+            TextView userName = (TextView) infoWindow.findViewById(R.id.wUserName);
+            TextView userPhone = (TextView) infoWindow.findViewById(R.id.wUserPhone);
+            TextView lostDate = (TextView) infoWindow.findViewById(R.id.wLostDate);
+            TextView txtaddress = (TextView) infoWindow.findViewById(R.id.wAddress);
+            TextView reward = (TextView) infoWindow.findViewById(R.id.wReward);
+
+
+            /*
+            * 抓取MySQL中的Img檔名(99.jpg)，然後使用HTTP url(http://140.118.37.220/dogimg/)
+            * 再利用url+SQL中的檔名去讀取網路圖片
+            *
+            * */
+
+
+            dogName.setText(dn);
+            dogFT.setText(dft);
+            dogBreed.setText(dbr);
+            userName.setText(un);
+            userPhone.setText(dn);
+            lostDate.setText(ld);
+            txtaddress.setText(address);
+            reward.setText(rw);
+
+            return infoWindow;
         }
     }
 
@@ -86,7 +149,7 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("走失寵物資訊"));
     }
 
     private void locationNameToMarker(String locationName) {
@@ -99,9 +162,7 @@ public class MapsActivity extends FragmentActivity {
 
             addressList = mapsActivity
                     .getFromLocationName(locationName, maxResults);
-        }
-
-        catch (IOException e) {
+        } catch (IOException e) {
 
         }
 
@@ -121,9 +182,8 @@ public class MapsActivity extends FragmentActivity {
             mMap.addMarker(new MarkerOptions().position(position)
                     .title(locationName).snippet(snippet));
 
-
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(position).zoom(15).build();
+                    .target(position).zoom(19).build();
             mMap.animateCamera(CameraUpdateFactory
                     .newCameraPosition(cameraPosition));
         }

@@ -103,7 +103,7 @@ public class btnHelpActivity extends Activity {
         rewardF = (RadioButton) findViewById(R.id.rewardFalse);
         rewardT = (RadioButton) findViewById(R.id.rewardTrue);
 
-        if(rewardF.isChecked()){
+        if(rewardT.isChecked()){
             txtReward.setEnabled(true);
         }
 
@@ -161,13 +161,24 @@ public class btnHelpActivity extends Activity {
             String strUserName = txtUserName.getText().toString().trim();
             String strUserPhone = txtUserPhone.getText().toString().trim();
             String strAddress = txtAddress.getText().toString().trim();
+            String strReward = txtReward.getText().toString().trim();
             String strDogSex = "";
+            String isReward="";
             String strBreed = "";
             if (sexF.isChecked()) {
                 strDogSex = sexF.getText().toString();
             } else {
                 strDogSex = sexM.getText().toString();
             }
+
+            if (rewardF.isChecked()) {
+                isReward = rewardF.getText().toString();
+            } else {
+                isReward = rewardT.getText().toString();
+            }
+
+
+
             strBreed = spinBreed.getSelectedItem().toString();
 
 
@@ -180,6 +191,8 @@ public class btnHelpActivity extends Activity {
             params.add(new BasicNameValuePair("DogFT", strDogFT));
             params.add(new BasicNameValuePair("DogBreed", strBreed));
             params.add(new BasicNameValuePair("Address", strAddress));
+            params.add(new BasicNameValuePair("Reward", strReward));
+            params.add(new BasicNameValuePair("isReward", isReward));
             //
             params.add(new BasicNameValuePair("UserName", strUserName));
             params.add(new BasicNameValuePair("UserPhone", strUserPhone));

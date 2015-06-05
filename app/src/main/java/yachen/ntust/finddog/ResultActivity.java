@@ -44,11 +44,16 @@ public class ResultActivity extends ListActivity {
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PRODUCTS = "lostdata";
     private static final String TAG_PID = "ID";
+
     private static final String TAG_NAME = "DogName";
     private static final String TAG_DOGBREED = "DogBreed";
     private static final String TAG_USERNAME = "UserName";
     private static final String TAG_USERPHONE = "UserPhone";
     private static final String TAG_ADDRESS = "Address";
+    private static final String TAG_ISREWARD = "isReward";
+    private static final String TAG_REWARD = "Reward";
+    private static final String TAG_DOGFT = "DogFT";
+    private static final String TAG_LOSTDATE = "LostDate";
     // products JSONArray
     JSONArray products = null;
     private String tempAdd;
@@ -81,6 +86,14 @@ public class ResultActivity extends ListActivity {
 //                String add = productsList.get(position).get(TAG_ADDRESS);
                 String add = productsList.get(position).get(TAG_ADDRESS);
 
+                String dogbreed = productsList.get(position).get(TAG_DOGBREED);
+                String dogname = productsList.get(position).get(TAG_NAME);
+                String dogft = productsList.get(position).get(TAG_DOGFT);
+                String username = productsList.get(position).get(TAG_USERNAME);
+                String userphone = productsList.get(position).get(TAG_USERPHONE);
+                String reward = productsList.get(position).get(TAG_REWARD);
+                String date = productsList.get(position).get(TAG_LOSTDATE);
+
                 // Starting new intent
                 Intent in = new Intent(getApplicationContext(),
                         MapsActivity.class);
@@ -88,7 +101,18 @@ public class ResultActivity extends ListActivity {
                 Bundle bundle = new Bundle();
                 // sending pid to next activity
                 bundle.putString(TAG_PID, pid);
+
                 bundle.putString(TAG_ADDRESS, add);
+                bundle.putString(TAG_DOGBREED,dogbreed);
+                bundle.putString(TAG_NAME,dogname);
+                bundle.putString(TAG_DOGFT,dogft);
+                bundle.putString(TAG_USERNAME,username);
+                bundle.putString(TAG_USERPHONE,userphone);
+                bundle.putString(TAG_REWARD,reward);
+                bundle.putString(TAG_LOSTDATE,date);
+
+
+
                 in.putExtras(bundle);
                 //starting new activity and expecting some response back
                 startActivityForResult(in, 100);
@@ -164,6 +188,12 @@ public class ResultActivity extends ListActivity {
                         String uname = c.getString(TAG_USERNAME);
                         String uphone = c.getString(TAG_USERPHONE);
                         String lostadd = c.getString(TAG_ADDRESS);
+                        String isreward = c.getString(TAG_ISREWARD);
+                        String dft = c.getString(TAG_DOGFT);
+                        String lostdate= c.getString(TAG_LOSTDATE);
+                        String reward = c.getString(TAG_REWARD)
+
+                                ;
                         tempAdd = lostadd;
                         // creating new HashMap
                         HashMap<String, String> map = new HashMap<String, String>();
@@ -175,7 +205,10 @@ public class ResultActivity extends ListActivity {
                         map.put(TAG_USERNAME, uname);
                         map.put(TAG_USERPHONE, uphone);
                         map.put(TAG_ADDRESS, lostadd);
-
+                        map.put(TAG_ISREWARD, isreward);
+                        map.put(TAG_DOGFT, dft);
+                        map.put(TAG_LOSTDATE, lostdate);
+                        map.put(TAG_REWARD, reward);
 
                         // adding HashList to ArrayList
                         productsList.add(map);
@@ -212,8 +245,8 @@ public class ResultActivity extends ListActivity {
                      * */
                     ListAdapter adapter = new SimpleAdapter(
                             context, productsList,
-                            R.layout.list_item, new String[]{TAG_PID, TAG_NAME, TAG_DOGBREED, TAG_USERNAME, TAG_USERPHONE},
-                            new int[]{R.id.dogID, R.id.dogN, R.id.dogB, R.id.userN, R.id.userP});
+                            R.layout.list_item, new String[]{TAG_PID, TAG_NAME, TAG_DOGBREED, TAG_USERNAME, TAG_ISREWARD},
+                            new int[]{R.id.dogID, R.id.dogN, R.id.dogB, R.id.userN, R.id.rewardFT});
                     // updating listview
                     setListAdapter(adapter);
 
