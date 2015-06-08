@@ -1,5 +1,7 @@
 package yachen.ntust.finddog;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,17 +15,27 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class ResultActivity extends ListActivity {
 
@@ -32,6 +44,7 @@ public class ResultActivity extends ListActivity {
     // Progress Dialog
     private ProgressDialog pDialog;
 
+    private GetWebImg ImgCache = new GetWebImg(this);
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
 
@@ -39,7 +52,7 @@ public class ResultActivity extends ListActivity {
 
     // url to get all products list
     private static String url_all_products = "http://140.118.37.220/android_connect/get_all_products.php";
-
+    private static String url_img = "http://140.118.37.220/dogimg/";
     // JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_PRODUCTS = "lostdata";
@@ -54,15 +67,22 @@ public class ResultActivity extends ListActivity {
     private static final String TAG_REWARD = "Reward";
     private static final String TAG_DOGFT = "DogFT";
     private static final String TAG_LOSTDATE = "LostDate";
+    private static final String TAG_DOGIMG = "DogImg";
+
+    private ListView lv;
+    private String imgArray[] = new String[500], dnArray[] = new String[500], dbArray[] = new String[500], unArray[] = new String[500], rwArray[] = new String[500];
     // products JSONArray
     JSONArray products = null;
     private String tempAdd;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         context = this;
+        //
+
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
 
@@ -70,7 +90,7 @@ public class ResultActivity extends ListActivity {
         new LoadAllProducts().execute();
 
         // Get listview
-        ListView lv = getListView();
+        lv = getListView();
 
         // on seleting single product
         // launching Edit Product Screen
@@ -80,12 +100,11 @@ public class ResultActivity extends ListActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 // getting values from selected ListItem
-                String pid = ((TextView) view.findViewById(R.id.dogID)).getText()
-                        .toString();
 
-//                String add = productsList.get(position).get(TAG_ADDRESS);
+//                String pid = ((TextView) view.findViewById(R.id.dogID)).getText().toString();
+
+                //抓取資料傳送到地圖
                 String add = productsList.get(position).get(TAG_ADDRESS);
-
                 String dogbreed = productsList.get(position).get(TAG_DOGBREED);
                 String dogname = productsList.get(position).get(TAG_NAME);
                 String dogft = productsList.get(position).get(TAG_DOGFT);
@@ -93,6 +112,9 @@ public class ResultActivity extends ListActivity {
                 String userphone = productsList.get(position).get(TAG_USERPHONE);
                 String reward = productsList.get(position).get(TAG_REWARD);
                 String date = productsList.get(position).get(TAG_LOSTDATE);
+                String dogimg = productsList.get(position).get(TAG_DOGIMG);
+
+                //Toast.makeText(context, productsList.get(position).get(TAG_DOGIMG), Toast.LENGTH_SHORT).show();
 
                 // Starting new intent
                 Intent in = new Intent(getApplicationContext(),
@@ -100,17 +122,17 @@ public class ResultActivity extends ListActivity {
 
                 Bundle bundle = new Bundle();
                 // sending pid to next activity
-                bundle.putString(TAG_PID, pid);
+                //bundle.putString(TAG_PID, pid);
 
                 bundle.putString(TAG_ADDRESS, add);
-                bundle.putString(TAG_DOGBREED,dogbreed);
-                bundle.putString(TAG_NAME,dogname);
-                bundle.putString(TAG_DOGFT,dogft);
-                bundle.putString(TAG_USERNAME,username);
-                bundle.putString(TAG_USERPHONE,userphone);
-                bundle.putString(TAG_REWARD,reward);
-                bundle.putString(TAG_LOSTDATE,date);
-
+                bundle.putString(TAG_DOGBREED, dogbreed);
+                bundle.putString(TAG_NAME, dogname);
+                bundle.putString(TAG_DOGFT, dogft);
+                bundle.putString(TAG_USERNAME, username);
+                bundle.putString(TAG_USERPHONE, userphone);
+                bundle.putString(TAG_REWARD, reward);
+                bundle.putString(TAG_LOSTDATE, date);
+                bundle.putString(TAG_DOGIMG, dogimg);
 
 
                 in.putExtras(bundle);
@@ -190,10 +212,14 @@ public class ResultActivity extends ListActivity {
                         String lostadd = c.getString(TAG_ADDRESS);
                         String isreward = c.getString(TAG_ISREWARD);
                         String dft = c.getString(TAG_DOGFT);
-                        String lostdate= c.getString(TAG_LOSTDATE);
-                        String reward = c.getString(TAG_REWARD)
+                        String lostdate = c.getString(TAG_LOSTDATE);
+                        String reward = c.getString(TAG_REWARD);
+                        String img = c.getString(TAG_DOGIMG);
+                        //tempImg = img;
+                        //
 
-                                ;
+                        //
+
                         tempAdd = lostadd;
                         // creating new HashMap
                         HashMap<String, String> map = new HashMap<String, String>();
@@ -209,8 +235,17 @@ public class ResultActivity extends ListActivity {
                         map.put(TAG_DOGFT, dft);
                         map.put(TAG_LOSTDATE, lostdate);
                         map.put(TAG_REWARD, reward);
+                        map.put(TAG_DOGIMG, url_img + img);
 
+
+                        //傳遞給adapter
+                        dnArray[i] = name;//狗名
+                        dbArray[i] = breed;//狗種
+                        unArray[i] = uname;//主名
+                        rwArray[i] = isreward;//是否賞金
+                        imgArray[i] = url_img + img;//圖片網址
                         // adding HashList to ArrayList
+
                         productsList.add(map);
 
                     }
@@ -243,17 +278,38 @@ public class ResultActivity extends ListActivity {
                     /**
                      * Updating parsed JSON data into ListView
                      * */
-                    ListAdapter adapter = new SimpleAdapter(
-                            context, productsList,
-                            R.layout.list_item, new String[]{TAG_PID, TAG_NAME, TAG_DOGBREED, TAG_USERNAME, TAG_ISREWARD},
-                            new int[]{R.id.dogID, R.id.dogN, R.id.dogB, R.id.userN, R.id.rewardFT});
-                    // updating listview
-                    setListAdapter(adapter);
+//
+                    //無圖片adapter
+//                    SimpleAdapter simpleAdapter = new SimpleAdapter(
+//                            context, productsList,
+//                            R.layout.list_item, new String[]{TAG_PID, TAG_NAME, TAG_DOGBREED, TAG_USERNAME, TAG_ISREWARD},
+//                            new int[]{R.id.dogID, R.id.dogN, R.id.dogB, R.id.userN, R.id.rewardFT});
+//
+//
+//                    ListAdapter adapter = simpleAdapter;
+//                    // updating listview
+//
+//
+//                    setListAdapter(adapter);
+
+                    //傳遞陣列內容給adapter，送給listView列出
+                    ArrayList<String[]> alldata = new ArrayList<String[]>();
+                    for (int i = 0; i < productsList.size(); i++) {
+                        alldata.add(createData(dnArray[i], dbArray[i], unArray[i], rwArray[i], imgArray[i]));
+                    }
+
+                    setListAdapter(new MydataAdapter(ResultActivity.this, alldata, ImgCache));
 
                 }
             });
 
         }
 
+
+    }
+
+    private String[] createData(String dn, String db, String un, String rw, String imgurl) {
+        String temp[] = {dn, db, un, rw, imgurl};
+        return temp;
     }
 }

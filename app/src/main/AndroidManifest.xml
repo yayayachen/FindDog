@@ -48,6 +48,8 @@
             android:label="@string/title_activity_result" >
         </activity>
 
+
+
     </application>
 
 </manifest>

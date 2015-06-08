@@ -1,10 +1,14 @@
 package yachen.ntust.finddog;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,15 +21,21 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity {
 
     private Context context;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-    private String address, dn, dft, dbr, un, up, ld, rw;
+    private String address, dn, dft, dbr, un, up, ld, rw, img;
     private static final String TAG_PID = "ID";
 
     private static final String TAG_NAME = "DogName";
@@ -36,7 +46,10 @@ public class MapsActivity extends FragmentActivity {
     private static final String TAG_DOGFT = "DogFT";
     private static final String TAG_REWARD = "Reward";
     private static final String TAG_LOSTDATE = "LostDate";
-
+    private static final String TAG_DOGIMG = "DogImg";
+//    private ImageView dogImg;
+    private Bitmap bitmap;
+    private Marker markerShowingInfoWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +67,7 @@ public class MapsActivity extends FragmentActivity {
             up = bundle.getString(TAG_USERPHONE);
             ld = bundle.getString(TAG_LOSTDATE);
             rw = bundle.getString(TAG_REWARD);
+            img = bundle.getString(TAG_DOGIMG);
 
             if ("".equals(rw)) {
                 rw = "無提供賞金";
@@ -64,17 +78,17 @@ public class MapsActivity extends FragmentActivity {
             }
         }
 
-        mMap.setInfoWindowAdapter(new mapInfoWindow());
+
+
+
     }
 
     class mapInfoWindow implements GoogleMap.InfoWindowAdapter {
         @Override
         public View getInfoWindow(Marker marker) {
-            return null;
-        }
 
-        @Override
-        public View getInfoContents(Marker marker) {
+            markerShowingInfoWindow = marker;
+
             View infoWindow = getLayoutInflater().inflate(R.layout.map_window, null);
 
             ImageView dogImg = (ImageView) infoWindow.findViewById(R.id.wimgDog);
@@ -91,20 +105,30 @@ public class MapsActivity extends FragmentActivity {
             /*
             * 抓取MySQL中的Img檔名(99.jpg)，然後使用HTTP url(http://140.118.37.220/dogimg/)
             * 再利用url+SQL中的檔名去讀取網路圖片
-            *
             * */
-
-
+            //Picasso.with(context).load(img).into(dogImg);
+            if (img != null) {
+                Picasso.with(context)
+                        .load(img)
+                        .placeholder(R.mipmap.tra)
+                        .into(dogImg, new MarkerCallback(marker));
+            }
             dogName.setText(dn);
             dogFT.setText(dft);
             dogBreed.setText(dbr);
             userName.setText(un);
-            userPhone.setText(dn);
+            userPhone.setText(up);
             lostDate.setText(ld);
-            txtaddress.setText(address);
+            txtaddress.setText("走失地點：\n"+address);
             reward.setText(rw);
-
+            Toast.makeText(context, img, Toast.LENGTH_SHORT).show();
             return infoWindow;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+
+            return null;
         }
     }
 
@@ -114,21 +138,6 @@ public class MapsActivity extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -142,16 +151,32 @@ public class MapsActivity extends FragmentActivity {
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
     private void setUpMap() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("走失寵物資訊"));
-    }
+        mMap.setInfoWindowAdapter(new mapInfoWindow());
 
+
+    }
+    public class MarkerCallback implements Callback {
+        Marker marker=null;
+
+        MarkerCallback(Marker marker) {
+            this.marker=marker;
+        }
+
+        @Override
+        public void onError() {
+            Log.e(getClass().getSimpleName(), "Error loading thumbnail!");
+        }
+
+        @Override
+        public void onSuccess() {
+            if (marker != null && marker.isInfoWindowShown()) {
+                marker.hideInfoWindow();
+                marker.showInfoWindow();
+            }
+        }
+    }
     private void locationNameToMarker(String locationName) {
 
         mMap.clear();
@@ -188,4 +213,6 @@ public class MapsActivity extends FragmentActivity {
                     .newCameraPosition(cameraPosition));
         }
     }
+
+
 }

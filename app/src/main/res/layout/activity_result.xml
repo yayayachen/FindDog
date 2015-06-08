@@ -36,7 +36,7 @@
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:layout_weight=".2"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="ID"
+                android:text="狗狗\n照片"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
