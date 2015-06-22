@@ -76,6 +76,7 @@ public class ResultActivity extends ListActivity {
     // products JSONArray
     JSONArray products = null;
     private String tempAdd, ct, getcity;
+    private int tmpCount[] = new int[500];
 
 //    private ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -395,11 +396,17 @@ public class ResultActivity extends ListActivity {
     private void getCity() {
 
         ArrayList<String[]> alldata = new ArrayList<String[]>();
-
+        int j = 0;
         for (int i = 0; i < productsList.size(); i++) {
+
             if (getcity.equals(tempCity[i])) {
                 alldata.add(createData(dnArray[i], dbArray[i], unArray[i], rwArray[i], imgArray[i]));
-                //Toast.makeText(context, tempCity[i], Toast.LENGTH_SHORT).show();
+                //取得篩選過後的順序
+                tmpCount[j] = i;
+                //Toast.makeText(context, tmpCount[j] + " " + productsList.get(tmpCount[j]).get(TAG_ADDRESS), Toast.LENGTH_SHORT).show();
+                j++;
+                //Toast.makeText(context, j + " ", Toast.LENGTH_SHORT).show();
+
             }
         }
 
@@ -419,17 +426,18 @@ public class ResultActivity extends ListActivity {
 
 
                 //抓取資料傳送到地圖
-                String add = productsList.get(position).get(TAG_ADDRESS);
-                String dogbreed = productsList.get(position).get(TAG_DOGBREED);
-                String dogname = productsList.get(position).get(TAG_NAME);
-                String dogft = productsList.get(position).get(TAG_DOGFT);
-                String username = productsList.get(position).get(TAG_USERNAME);
-                String userphone = productsList.get(position).get(TAG_USERPHONE);
-                String reward = productsList.get(position).get(TAG_REWARD);
-                String date = productsList.get(position).get(TAG_LOSTDATE);
-                String dogimg = productsList.get(position).get(TAG_DOGIMG);
+                String add = productsList.get(tmpCount[position]).get(TAG_ADDRESS);
+                String dogbreed = productsList.get(tmpCount[position]).get(TAG_DOGBREED);
+                String dogname = productsList.get(tmpCount[position]).get(TAG_NAME);
+                String dogft = productsList.get(tmpCount[position]).get(TAG_DOGFT);
+                String username = productsList.get(tmpCount[position]).get(TAG_USERNAME);
+                String userphone = productsList.get(tmpCount[position]).get(TAG_USERPHONE);
+                String reward = productsList.get(tmpCount[position]).get(TAG_REWARD);
+                String date = productsList.get(tmpCount[position]).get(TAG_LOSTDATE);
+                String dogimg = productsList.get(tmpCount[position]).get(TAG_DOGIMG);
 
-                
+                //Toast.makeText(context, productsList.get(tmpCount[position]).get(TAG_NAME), Toast.LENGTH_SHORT).show();
+
                 // Starting new intent
                 Intent in = new Intent(getApplicationContext(),
                         MapsActivity.class);
@@ -450,10 +458,10 @@ public class ResultActivity extends ListActivity {
                 bundle.putString(TAG_DOGIMG, dogimg);
 
 
-                // in.putExtras(bundle);
+                in.putExtras(bundle);
 
                 //starting new activity and expecting some response back
-                // startActivityForResult(in, 100);
+                startActivityForResult(in, 100);
 
             }
         });

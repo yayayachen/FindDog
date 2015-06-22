@@ -92,7 +92,7 @@ public class MapsActivity extends FragmentActivity {
 
                 Intent it = new Intent(Intent.ACTION_VIEW);
                 it.putExtra("address", up);
-                it.putExtra("sms_body", un + "您好：\n" + "我有看到您走失的狗狗，\n若看到此封訊息請與我聯繫，\n謝謝。");
+                it.putExtra("sms_body", un + "您好：\n" + "我有看到您走失的" + dn + "，" + "\n若看到此封訊息請與我聯繫，\n謝謝。");
                 it.setType("vnd.android-dir/mms-sms");
                 startActivity(it);
             }

@@ -57,22 +57,6 @@ public class GetWebImg{
         }).start();
     }
 
-    //	private Bitmap LoadUrlPic(final String u){
-//		try {
-//			Log.d(TAG_NAME, "DownLoadUrlPic "+u);
-//			InputStream is = new URL(u).openStream();
-//			int i;
-//			byte[] data = new byte[1024];
-//			ByteArrayBuffer buf = new ByteArrayBuffer(1024);
-//			while ((i = is.read(data)) != -1)
-//				buf.append(data, 0, i);
-//			is.close();
-//			return BitmapFactory.decodeByteArray(buf.toByteArray(), 0, buf.length());
-//		} catch (Exception e) {
-//			Log.d(TAG_NAME, e.toString());
-//		}
-//		return null;
-//	}
     //抓網路的圖
     public synchronized Bitmap LoadUrlPic(Context c, String url) {
         URL imgUrl;
