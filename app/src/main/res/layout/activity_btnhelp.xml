@@ -9,7 +9,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
         android:layout_weight=".1"
         android:orientation="vertical">
 
@@ -32,6 +31,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="請選擇品種："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
                 <Spinner
@@ -61,6 +61,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="狗狗名字："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
                 <EditText
@@ -87,16 +88,64 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="毛色或明顯特徵："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
                 <EditText
                     android:id="@+id/txtDogFT"
+                    android:textSize="15sp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_weight=".5"
-                    android:hint="請輸入狗狗明顯特徵或毛色"
-                    />
+                    android:hint="請輸入狗狗明顯特徵或毛色" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5sp"
+                android:layout_weight=".5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_weight=".9"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="請上傳狗狗照片："
+                    android:background="#ffba00"
+                    android:textColor="#000000" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imgDogImg"
+                        android:layout_width="100sp"
+                        android:layout_marginLeft="5sp"
+                        android:layout_height="100sp"
+                        android:src="@mipmap/bgdog" />
+
+                    <Button
+                        android:id="@+id/btnDogImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_weight=".1"
+                        android:background="#00000000"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:text="選擇照片">
+
+                    </Button>
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -114,6 +163,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="走失日期："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
                 <Button
@@ -144,16 +194,36 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="走失地點："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
-                <EditText
-                    android:id="@+id/txtAddress"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_weight=".5"
-                    android:hint="請輸入狗狗走失地點"
-                    />
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id='@+id/spinCity'
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_weight=".8"
+                        android:textSize="12sp"
+                        android:entries="@array/arraryCity"
+                        android:gravity="center_horizontal|center_vertical"
+                        android:singleLine="true"></Spinner>
+
+                    <EditText
+                        android:id="@+id/txtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal|center_vertical"
+                        android:layout_weight=".5"
+                        android:textSize="12sp"
+                        android:hint="請輸入狗狗走失地點" />
+                </LinearLayout>
 
 
             </LinearLayout>
@@ -172,6 +242,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="狗狗性別："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
 
@@ -217,6 +288,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="主人姓名："
+                    android:background="#ffba00"
                     android:textColor="#000000" />
 
                 <EditText
@@ -225,8 +297,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_weight=".5"
-                    android:hint="請輸入主人姓名"
-                    />
+                    android:hint="請輸入主人姓名" />
 
             </LinearLayout>
 
@@ -244,6 +315,7 @@
                     android:layout_weight=".9"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="主人電話："
+                    android:background="#ffba00"
                     android:textColor="#000000"
 
                     />
@@ -254,9 +326,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_weight=".5"
-                    android:inputType="phone"
                     android:hint="請輸入連絡電話"
-                    />
+                    android:inputType="phone" />
 
             </LinearLayout>
 
@@ -271,9 +342,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal|center_vertical"
-                    android:layout_weight=".9"
+                    android:layout_weight=".805"
                     android:gravity="center_horizontal|center_vertical"
                     android:text="是否提供賞金："
+                    android:background="#ffba00"
                     android:textColor="#000000"
 
                     />
@@ -284,6 +356,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical|center_horizontal"
                     android:layout_weight=".9"
+                    android:id="@+id/radiogroup"
                     android:orientation="horizontal">
 
                     <RadioButton
@@ -291,6 +364,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center_vertical|center_horizontal"
+                        android:gravity="center_vertical|center_horizontal"
                         android:layout_weight=".5"
                         android:checked="true"
                         android:text="否" />
@@ -299,6 +373,7 @@
                         android:id="@+id/rewardTrue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center_vertical|center_horizontal"
                         android:layout_gravity="center_vertical|center_horizontal"
                         android:layout_weight=".5"
                         android:text="是" />
@@ -312,6 +387,7 @@
                     android:layout_gravity="center_horizontal|center_vertical"
                     android:layout_weight=".8"
                     android:editable="true"
+                    android:hint="請輸入懸賞金額"
                     android:inputType="phone" />
 
             </LinearLayout>
@@ -323,7 +399,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal|center_vertical"
-        android:layout_weight=".7"
+        android:layout_weight=".9"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical">
 

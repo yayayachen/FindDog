@@ -1,15 +1,18 @@
 package yachen.ntust.finddog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +40,7 @@ public class MapsActivity extends FragmentActivity {
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private String address, dn, dft, dbr, un, up, ld, rw, img;
     private static final String TAG_PID = "ID";
-
+    private Button btnSMS;
     private static final String TAG_NAME = "DogName";
     private static final String TAG_DOGBREED = "DogBreed";
     private static final String TAG_USERNAME = "UserName";
@@ -47,15 +50,20 @@ public class MapsActivity extends FragmentActivity {
     private static final String TAG_REWARD = "Reward";
     private static final String TAG_LOSTDATE = "LostDate";
     private static final String TAG_DOGIMG = "DogImg";
-//    private ImageView dogImg;
+    //    private ImageView dogImg;
     private Bitmap bitmap;
     private Marker markerShowingInfoWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         setUpMapIfNeeded();
         context = this;
+        btnSMS = (Button) findViewById(R.id.btnSMS);
+
+        Toast.makeText(context, "點擊地圖上紅色標記可顯示走失寵物資訊", Toast.LENGTH_LONG).show();
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -69,7 +77,7 @@ public class MapsActivity extends FragmentActivity {
             rw = bundle.getString(TAG_REWARD);
             img = bundle.getString(TAG_DOGIMG);
 
-            if ("".equals(rw)) {
+            if ("".equals(rw) || "0".equals(rw)) {
                 rw = "無提供賞金";
             }
             if (msg != null) {
@@ -78,7 +86,17 @@ public class MapsActivity extends FragmentActivity {
             }
         }
 
+        btnSMS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent it = new Intent(Intent.ACTION_VIEW);
+                it.putExtra("address", up);
+                it.putExtra("sms_body", un + "您好：\n" + "我有看到您走失的狗狗，\n若看到此封訊息請與我聯繫，\n謝謝。");
+                it.setType("vnd.android-dir/mms-sms");
+                startActivity(it);
+            }
+        });
 
 
     }
@@ -119,9 +137,9 @@ public class MapsActivity extends FragmentActivity {
             userName.setText(un);
             userPhone.setText(up);
             lostDate.setText(ld);
-            txtaddress.setText("走失地點：\n"+address);
+            txtaddress.setText("走失地點：\n" + address);
             reward.setText(rw);
-            Toast.makeText(context, img, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, img, Toast.LENGTH_SHORT).show();
             return infoWindow;
         }
 
@@ -157,11 +175,12 @@ public class MapsActivity extends FragmentActivity {
 
 
     }
+
     public class MarkerCallback implements Callback {
-        Marker marker=null;
+        Marker marker = null;
 
         MarkerCallback(Marker marker) {
-            this.marker=marker;
+            this.marker = marker;
         }
 
         @Override
@@ -177,6 +196,7 @@ public class MapsActivity extends FragmentActivity {
             }
         }
     }
+
     private void locationNameToMarker(String locationName) {
 
         mMap.clear();

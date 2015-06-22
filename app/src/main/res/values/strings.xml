@@ -6,6 +6,7 @@
     <string name="title_activity_btn_help">btnHelpActivity</string>
     <string name="title_activity_maps">Map</string>
     <string-array name="arrayDog">
+        <item>請選擇</item>
         <item>米克斯</item>
         <item>瑪爾濟斯</item>
         <item>貴賓犬</item>
@@ -31,6 +32,34 @@
         <item>法國鬥牛犬</item>
         <item>英國鬥牛犬</item>
     </string-array>
+
+    <string-array name="arraryCity">
+        <item>請選擇</item>
+        <item>基隆市</item>
+        <item>臺北市</item>
+        <item>新北市</item>
+        <item>桃園市</item>
+        <item>新竹市</item>
+        <item>新竹縣</item>
+        <item>苗栗縣</item>
+        <item>臺中市</item>
+        <item>彰化縣</item>
+        <item>南投縣</item>
+        <item>雲林縣</item>
+        <item>嘉義市</item>
+        <item>嘉義縣</item>
+        <item>臺南市</item>
+        <item>高雄市</item>
+        <item>屏東縣</item>
+        <item>臺東縣</item>
+        <item>花蓮縣</item>
+        <item>宜蘭縣</item>
+        <item>澎湖縣</item>
+        <item>金門縣</item>
+        <item>連江縣</item>
+    </string-array>
+
+
     <string name="title_activity_result">ResultActivity</string>
     <string name="title_activity_all_data">AllDataActivity</string>
 </resources>

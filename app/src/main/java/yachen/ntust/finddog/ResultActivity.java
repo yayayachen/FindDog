@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +44,7 @@ public class ResultActivity extends ListActivity {
     private Context context;
     // Progress Dialog
     private ProgressDialog pDialog;
-
+    private Spinner spinCity;
     private GetWebImg ImgCache = new GetWebImg(this);
     // Creating JSON Parser object
     JSONParser jParser = new JSONParser();
@@ -68,13 +69,15 @@ public class ResultActivity extends ListActivity {
     private static final String TAG_DOGFT = "DogFT";
     private static final String TAG_LOSTDATE = "LostDate";
     private static final String TAG_DOGIMG = "DogImg";
-
+    private static final String TAG_CITY = "LostCity";
     private ListView lv;
     private String imgArray[] = new String[500], dnArray[] = new String[500], dbArray[] = new String[500], unArray[] = new String[500], rwArray[] = new String[500];
+    private String tempCity[] = new String[500];
     // products JSONArray
     JSONArray products = null;
-    private String tempAdd;
-    private ImageLoader imageLoader = ImageLoader.getInstance();
+    private String tempAdd, ct, getcity;
+
+//    private ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +85,8 @@ public class ResultActivity extends ListActivity {
         setContentView(R.layout.activity_result);
         context = this;
         //
+        spinCity = (Spinner) findViewById(R.id.spinRSCity);
+
 
         // Hashmap for ListView
         productsList = new ArrayList<HashMap<String, String>>();
@@ -92,55 +97,6 @@ public class ResultActivity extends ListActivity {
         // Get listview
         lv = getListView();
 
-        // on seleting single product
-        // launching Edit Product Screen
-        lv.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                // getting values from selected ListItem
-
-//                String pid = ((TextView) view.findViewById(R.id.dogID)).getText().toString();
-
-                //抓取資料傳送到地圖
-                String add = productsList.get(position).get(TAG_ADDRESS);
-                String dogbreed = productsList.get(position).get(TAG_DOGBREED);
-                String dogname = productsList.get(position).get(TAG_NAME);
-                String dogft = productsList.get(position).get(TAG_DOGFT);
-                String username = productsList.get(position).get(TAG_USERNAME);
-                String userphone = productsList.get(position).get(TAG_USERPHONE);
-                String reward = productsList.get(position).get(TAG_REWARD);
-                String date = productsList.get(position).get(TAG_LOSTDATE);
-                String dogimg = productsList.get(position).get(TAG_DOGIMG);
-
-                //Toast.makeText(context, productsList.get(position).get(TAG_DOGIMG), Toast.LENGTH_SHORT).show();
-
-                // Starting new intent
-                Intent in = new Intent(getApplicationContext(),
-                        MapsActivity.class);
-
-                Bundle bundle = new Bundle();
-                // sending pid to next activity
-                //bundle.putString(TAG_PID, pid);
-
-                bundle.putString(TAG_ADDRESS, add);
-                bundle.putString(TAG_DOGBREED, dogbreed);
-                bundle.putString(TAG_NAME, dogname);
-                bundle.putString(TAG_DOGFT, dogft);
-                bundle.putString(TAG_USERNAME, username);
-                bundle.putString(TAG_USERPHONE, userphone);
-                bundle.putString(TAG_REWARD, reward);
-                bundle.putString(TAG_LOSTDATE, date);
-                bundle.putString(TAG_DOGIMG, dogimg);
-
-
-                in.putExtras(bundle);
-                //starting new activity and expecting some response back
-                startActivityForResult(in, 100);
-
-            }
-        });
 
     }
 
@@ -215,11 +171,8 @@ public class ResultActivity extends ListActivity {
                         String lostdate = c.getString(TAG_LOSTDATE);
                         String reward = c.getString(TAG_REWARD);
                         String img = c.getString(TAG_DOGIMG);
-                        //tempImg = img;
+                        ct = c.getString(TAG_CITY);
                         //
-
-                        //
-
                         tempAdd = lostadd;
                         // creating new HashMap
                         HashMap<String, String> map = new HashMap<String, String>();
@@ -236,8 +189,8 @@ public class ResultActivity extends ListActivity {
                         map.put(TAG_LOSTDATE, lostdate);
                         map.put(TAG_REWARD, reward);
                         map.put(TAG_DOGIMG, url_img + img);
-
-
+                        map.put(TAG_CITY, ct);
+                        tempCity[i] = ct;
                         //傳遞給adapter
                         dnArray[i] = name;//狗名
                         dbArray[i] = breed;//狗種
@@ -293,18 +246,217 @@ public class ResultActivity extends ListActivity {
 //                    setListAdapter(adapter);
 
                     //傳遞陣列內容給adapter，送給listView列出
-                    ArrayList<String[]> alldata = new ArrayList<String[]>();
-                    for (int i = 0; i < productsList.size(); i++) {
-                        alldata.add(createData(dnArray[i], dbArray[i], unArray[i], rwArray[i], imgArray[i]));
-                    }
+                    spinCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            switch (position) {
 
-                    setListAdapter(new MydataAdapter(ResultActivity.this, alldata, ImgCache));
+                                case 0:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 1:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 2:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 3:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 4:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 5:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 6:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 7:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 8:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 9:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 10:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 11:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 12:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 13:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 14:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 15:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 16:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 17:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 18:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 19:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 20:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 21:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 22:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 23:
+                                    getcity = spinCity.getSelectedItem().toString();
+                                    getCity();
+                                    //Toast.makeText(context, getcity, Toast.LENGTH_SHORT).show();
+                                    break;
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                    getData();
 
                 }
             });
 
         }
 
+
+    }
+
+    private void getCity() {
+
+        ArrayList<String[]> alldata = new ArrayList<String[]>();
+
+        for (int i = 0; i < productsList.size(); i++) {
+            if (getcity.equals(tempCity[i])) {
+                alldata.add(createData(dnArray[i], dbArray[i], unArray[i], rwArray[i], imgArray[i]));
+                //Toast.makeText(context, tempCity[i], Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        setListAdapter(new MydataAdapter(ResultActivity.this, alldata, ImgCache));
+    }
+
+    private void getData() {
+
+        // on seleting single product
+        // launching Edit Product Screen
+        lv.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // getting values from selected ListItem
+
+
+                //抓取資料傳送到地圖
+                String add = productsList.get(position).get(TAG_ADDRESS);
+                String dogbreed = productsList.get(position).get(TAG_DOGBREED);
+                String dogname = productsList.get(position).get(TAG_NAME);
+                String dogft = productsList.get(position).get(TAG_DOGFT);
+                String username = productsList.get(position).get(TAG_USERNAME);
+                String userphone = productsList.get(position).get(TAG_USERPHONE);
+                String reward = productsList.get(position).get(TAG_REWARD);
+                String date = productsList.get(position).get(TAG_LOSTDATE);
+                String dogimg = productsList.get(position).get(TAG_DOGIMG);
+
+                
+                // Starting new intent
+                Intent in = new Intent(getApplicationContext(),
+                        MapsActivity.class);
+                //Toast.makeText(context, add+""+dogbreed, Toast.LENGTH_SHORT).show();
+
+                Bundle bundle = new Bundle();
+                // sending pid to next activity
+                //bundle.putString(TAG_PID, pid);
+
+                bundle.putString(TAG_ADDRESS, add);
+                bundle.putString(TAG_DOGBREED, dogbreed);
+                bundle.putString(TAG_NAME, dogname);
+                bundle.putString(TAG_DOGFT, dogft);
+                bundle.putString(TAG_USERNAME, username);
+                bundle.putString(TAG_USERPHONE, userphone);
+                bundle.putString(TAG_REWARD, reward);
+                bundle.putString(TAG_LOSTDATE, date);
+                bundle.putString(TAG_DOGIMG, dogimg);
+
+
+                // in.putExtras(bundle);
+
+                //starting new activity and expecting some response back
+                // startActivityForResult(in, 100);
+
+            }
+        });
 
     }
 

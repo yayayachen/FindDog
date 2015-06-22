@@ -35,15 +35,6 @@ public class MainActivity extends Activity {
             }
         });
 
-//        btnMap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent();
-//                //intent.setClass(context, MapsActivity.class);
-//                intent.setClass(context, MapsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         btnLostList.setOnClickListener(new View.OnClickListener() {
             @Override
